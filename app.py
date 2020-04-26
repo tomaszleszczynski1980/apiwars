@@ -23,10 +23,8 @@ def check_if_logged():
 def main():
 
     error = not test_connection()
-    if not error:
-        return 'Hello'
-    else:
-        return 'Error'
+
+    return render_template("main.html")
 
 
 if __name__ == '__main__':
