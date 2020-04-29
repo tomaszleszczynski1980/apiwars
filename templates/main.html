@@ -1,11 +1,44 @@
 {% extends "layout.html" %}
 
 {% block scripts %}
-{#    <script src="{{ url_for('static', filename='js/game.js') }}" defer></script>#}
 {% endblock %}
 
 {% block content %}
 <div class="main_table">
+    <h1>Star Wars universe planets</h1>
+    <button id="previous" type="button" class="nav_btn">Previous</button>
+    <button id="next" type="button" class="nav_btn">Next</button>
 
+    <table>
+        <thead>
+            <tr>
+            {% for key in planets[0] %}
+                <th>{{ key }}</th>
+            {% endfor %}
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for planet in planets %}
+            <tr>
+            {% for key, item in planet.items() %}
+                {% set measure = {'Diameter':' km', 'Surface water':'%', 'Population':' people'} %}
+                {% if key == 'Residents' %}
+                    <td>
+                    {% if item|length == 0 %}
+                        No known residents
+                    {% else %}
+                         <button type="button" id="resident_{{ planet['name'] }}">{{ item|length }} resident(s)</button>
+                    {% endif %}
+                    </td>
+                {% else %}
+                    <td>{{ item }}{{ measure[key] if key in measure and item != 'unknown' }}</td>
+                {% endif %}
+            {% endfor %}
+                    <td><button type="button" id="vote_{{ planet['name'] }}">Vote</button></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}
