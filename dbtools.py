@@ -1,1 +1,7 @@
-# this module contains functions creating queries to PostgreSQL DB
+from DBconnect import connection_handler
+
+@connection_handler
+def add_vote():
+    pass
+
+

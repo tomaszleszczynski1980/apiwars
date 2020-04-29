@@ -14,10 +14,12 @@ def password_check(password: str, hashed_password: str):
         return False
 
 
-def filter_dict(dictionary: dict, keys_list=None):
+def filter_dict(dictionary: dict, keys_list=None, return_list=False):
 
     if not keys_list:
         keys_list = dictionary.keys()
 
-    new_dict = {key.replace('_', ' ').capitalize(): value for key, value in dictionary.items() if key in keys_list}
-    return new_dict
+    if return_list:
+        return [value for key, value in dictionary.items() if key in keys_list]
+    else:
+        return {key.replace('_', ' ').capitalize(): value for key, value in dictionary.items() if key in keys_list}

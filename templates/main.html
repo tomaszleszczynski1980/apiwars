@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block scripts %}
+    <script src="{{ url_for('static', filename='js/residents.js') }}" defer></script>
 {% endblock %}
 
 {% block content %}
@@ -8,14 +9,14 @@
     <h1>Star Wars universe planets</h1>
 
     <a href="/{{ prev[-1] if prev}}">
-        <button id="previous" type="button" class="nav_btn" {{ 'disabled' if not prev }}>Previous</button>
+        <button id="previous" type="button" class="btn btn-primary" {{ 'disabled' if not prev }}>Previous</button>
     </a>
     <a href="/{{ nextt[-1] if nextt }}">
-        <button id="next" type="button" class="nav_btn" {{ 'disabled' if not nextt }}>Next</button>
+        <button id="next" type="button" class="btn btn-primary" {{ 'disabled' if not nextt }}>Next</button>
     </a>
 
-    <table>
-        <thead>
+    <table class="table">
+        <thead class="thead-dark">
             <tr>
             {% for key in planets[0] %}
                 <th>{{ key }}</th>
@@ -33,17 +34,57 @@
                     {% if item|length == 0 %}
                         No known residents
                     {% else %}
-                         <button type="button" id="resident_{{ planet['name'] }}">{{ item|length }} resident(s)</button>
+                         <button
+                                 type="button" id="{{ planet['Name'] }}"
+                                 onclick="residents(this.id)"
+                                 class="btn btn-primary" data-toggle="modal"
+                                 data-target="#ModalScrollable">{{ item|length }} resident(s)
+                         </button>
                     {% endif %}
                     </td>
                 {% else %}
                     <td>{{ item }}{{ measure[key] if key in measure and item != 'unknown' }}</td>
                 {% endif %}
             {% endfor %}
-                    <td><button type="button" id="vote_{{ planet['name'] }}">Vote</button></td>
+                <td>
+                    <button type="button" class="btn btn-success" id="vote-{{ planet['Name'] }}">
+                        Vote
+                    </button>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="ModalScrollable" tabindex="-1" role="dialog"
+     aria-labelledby="ModalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalScrollableTitle"><!-- here script enters window title --></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Name</th><th>Heigh</th><th>Mass</th><th>Hair color</th>
+                    <th>Skin color</th><th>Eye color</th><th>Birth year</th><th>Gender</th>
+                </tr>
+            </thead>
+            <tbody id="TableBody">
+                <!-- here script enters table rows -->
+            </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
