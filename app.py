@@ -28,7 +28,13 @@ def main(page=None):
 
     user = check_if_logged()
     error = not test_connection()
-    planets = requests.get(f'http://swapi.dev/api/planets/?page={page}').json()['results']
+    response = requests.get(f'http://swapi.dev/api/planets/?page={page}').json()
+    planets = response['results']
+    prev = response['previous']
+    nextt = response['next']
+
+    print('prev:', prev)
+    print('next:', nextt)
 
     keys_list = ['name', 'diameter', 'climate', 'terrain', 'surface_water', 'population', 'residents']
 
@@ -36,7 +42,7 @@ def main(page=None):
         new_planet = utils.filter_dict(planet, keys_list)
         planets[planet_index] = new_planet
 
-    return render_template("main.html", planets=planets, user=user, error=error)
+    return render_template("main.html", planets=planets, user=user, error=error, prev=prev, nextt=nextt)
 
 
 if __name__ == '__main__':
