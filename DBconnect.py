@@ -13,7 +13,8 @@ def get_connection_url():
     if user and password and host and dbname:
         return f"postgresql://{user}:{password}@{host}/{dbname}"
     else:
-        raise ConnectionError("Necessary environment variable(s) not defined")
+        # raise ConnectionError("Necessary environment variable(s) not defined")
+        return f"postgresql://Tomek:kremlin@localhost/apiwars"
 
 
 def open_db():
