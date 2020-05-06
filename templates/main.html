@@ -47,9 +47,9 @@
                 {% endif %}
             {% endfor %}
                 <td>
-                    <button type="button" class="btn btn-success" id="vote-{{ planet['Name'] }}">
-                        Vote
-                    </button>
+                <button type="button" class="btn btn-success" id="vote-{{ planet['Name'] }}" {{ 'disabled' if not user }}>
+                    Vote
+                </button>
                 </td>
             </tr>
         {% endfor %}
@@ -60,31 +60,32 @@
 <!-- Modal -->
 <div class="modal fade" id="ModalScrollable" tabindex="-1" role="dialog"
      aria-labelledby="ModalScrollableTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalScrollableTitle"><!-- here script enters window title --></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <table class="table">
-            <thead class="thead-light">
-                <tr>
-                    <th>Name</th><th>Heigh</th><th>Mass</th><th>Hair color</th>
-                    <th>Skin color</th><th>Eye color</th><th>Birth year</th><th>Gender</th>
-                </tr>
-            </thead>
-            <tbody id="TableBody">
-                <!-- here script enters table rows -->
-            </tbody>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalScrollableTitle"><!-- here script enters window title --></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="ModalBody">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Name</th><th>Heigh</th><th>Mass</th><th>Hair color</th>
+                            <th>Skin color</th><th>Eye color</th><th>Birth year</th><th>Gender</th>
+                        </tr>
+                    </thead>
+                    <tbody id="TableBody">
+                        <!-- here script enters table rows -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
+<!-- End Modal -->
 {% endblock %}

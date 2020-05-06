@@ -45,6 +45,9 @@ def main(page=None):
 @app.route('/residents/<planet>')
 def get_residents(planet):
 
+    user = check_if_logged()
+    error = not test_connection()
+
     planet = planet.replace(' ', '%20')
     response = requests.get(f'https://swapi.dev/api/planets/?search={planet}').json()
     residents = response['results'][0]['residents']
@@ -63,7 +66,11 @@ def get_residents(planet):
 @app.route('/vote/<planet>')
 def vote(planet):
 
-    pass
+    user = check_if_logged()
+    connection = test_connection()
+
+    if connection and user:
+        dbtools.add_vote(user, planet)
 
 
 @app.route('/register')
@@ -75,8 +82,9 @@ def register():
 @app.route('/login')
 def login():
 
-    pass
-
+    user = check_if_logged()
+    connection = test_connection()
+    
 
 if __name__ == '__main__':
     app.run()

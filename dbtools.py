@@ -1,6 +1,7 @@
 from DBconnect import connection_handler
 from datetime import datetime
 
+
 @connection_handler
 def add_vote(cursor, username: str, planet: str):
 
@@ -8,16 +9,16 @@ def add_vote(cursor, username: str, planet: str):
     variables = {'planet': planet}
 
     cursor.execute(query, variables)
-    vote = cursor.fetchone()
-
-    print(vote)
-    print(type(vote))
+    vote = cursor.fetchone()['vote_number']
 
     time = datetime.now()
+    vote += 1
 
     query = """INSERT INTO planet_votes (vote_number, username, time, planet)
                VALUES (%(vote)s), (%(username)s), (%(time)s), (%(planet)s);"""
     variables = {'vote': vote, 'username': username, 'time': time, 'planet': planet}
+
+    cursor.execute(query, variables)
 
 
 @connection_handler
@@ -27,6 +28,7 @@ def add_user(cursor, username: str, hashed_password: str):
     variables = {'username': username, 'hashed_password': hashed_password}
 
     cursor.execute(query, variables)
+
 
 @connection_handler
 def get_user(cursor, username: str):
