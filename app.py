@@ -71,6 +71,9 @@ def vote(planet):
 
     if connection and user:
         dbtools.add_vote(user, planet)
+        return jsonify(vote=True)
+    else:
+        return jsonify(vote=False)
 
 
 @app.route('/register')
