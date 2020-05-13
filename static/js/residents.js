@@ -1,5 +1,5 @@
 const header = document.getElementById('ModalScrollableTitle');
-const body = document.getElementById('TableBody');
+const body = document.getElementById('ModalBody');
 
 function residents(clickedId) {
     header.innerText = `Residents of ${clickedId}`;
@@ -12,7 +12,14 @@ function residents(clickedId) {
         if (this.readyState === 4 && this.status === 200) {
 
             let data = JSON.parse(this.response);
-            let tableBodyHTML = '';
+            let tableBodyHTML = '<table class="table">\n' +
+                '                    <thead class="thead-light">\n' +
+                '                        <tr>\n' +
+                '                            <th>Name</th><th>Heigh</th><th>Mass</th><th>Hair color</th>\n' +
+                '                            <th>Skin color</th><th>Eye color</th><th>Birth year</th><th>Gender</th>\n' +
+                '                        </tr>\n' +
+                '                    </thead>\n' +
+                '                    <tbody id="TableBody">';
 
             for (let row of data) {
                 tableBodyHTML += '<tr>';
@@ -20,9 +27,10 @@ function residents(clickedId) {
                 for (let rowItem of row) {
                     tableBodyHTML += `<td>${rowItem}</td>`;
                 }
-            tableBodyHTML += '</tr>';
+                tableBodyHTML += '</tr>';
             }
-        body.innerHTML = tableBodyHTML;
+            tableBodyHTML += '</tbody></table>'
+            body.innerHTML = tableBodyHTML;
         }
     };
 
